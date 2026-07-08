@@ -1,36 +1,162 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Atharv's Portfolio Website
 
-## Getting Started
+A modern, high-performance, and fully responsive personal portfolio website built to showcase projects, skills, and certifications. This portfolio features a dynamic, full-stack contact form backed by a robust PostgreSQL database and an automated email notification system.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🛠 Tech Stack
+
+### **Frontend**
+- **Framework**: Next.js (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS & Vanilla CSS (Custom tokens)
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Forms**: React Hook Form
+- **Validation**: Zod (Client & Server)
+
+### **Backend & Database**
+- **API**: Next.js Route Handlers
+- **Database**: PostgreSQL (Hosted on Neon)
+- **ORM**: Prisma (v6)
+- **Email Service**: Resend
+- **Rate Limiting**: Custom In-Memory Store
+
+---
+
+## 🏗 Architecture & Workflows
+
+### **1. Full-Stack Contact Form Workflow**
+
+When a visitor submits the contact form, the data undergoes rigorous client-side and server-side validation before being stored in the database and triggering an email notification to the site owner.
+
+```mermaid
+sequenceDiagram
+    actor Visitor
+    participant Browser as Client (Next.js)
+    participant API as Server (/api/contact)
+    participant DB as PostgreSQL (Neon)
+    participant Resend as Email Service
+
+    Visitor->>Browser: Fills out Contact Form
+    Browser->>Browser: Zod Client-Side Validation
+    Browser->>API: POST /api/contact {name, email, subject, message}
+    
+    API->>API: Rate Limiting Check (IP-based)
+    API->>API: Zod Server-Side Validation
+    
+    API->>DB: Prisma Client: Create ContactMessage
+    DB-->>API: Returns Success
+    
+    API->>Resend: Trigger Notification Email
+    Resend-->>API: Returns Success
+    
+    API-->>Browser: 200 OK (Success Response)
+    Browser-->>Visitor: Displays Success Message & Clears Form
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### **2. Database Schema (Prisma)**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The data layer uses Prisma to interact with the PostgreSQL database. The schema ensures data integrity for every incoming contact message.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```mermaid
+erDiagram
+    ContactMessage {
+        String id PK "cuid()"
+        String name
+        String email
+        String subject
+        String message
+        Boolean isRead "default(false)"
+        DateTime createdAt "default(now())"
+    }
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## ✨ Key Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Blazing Fast Performance**: Statically generated pages where possible, optimizing load times.
+- **Dynamic Grid Layouts**: Projects and certifications are displayed using clean, distinct UI cards with custom hover effects (Gold for projects, Emerald for certifications).
+- **Smooth Animations**: High-quality micro-interactions using Framer Motion to give the UI a premium, native feel.
+- **Type-Safe Full-Stack Architecture**: End-to-end type safety using TypeScript, Prisma, and Zod.
+- **Secure Backend**: 
+  - IP-based rate limiting to prevent spam.
+  - Server-side validation parsing.
+  - No hardcoded secrets (Environment variable driven).
+- **Automated Emails**: Uses Resend API to instantly forward contact form submissions to the site owner.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📂 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```text
+portfolio/
+├── app/                  # Next.js App Router pages and API routes
+│   ├── api/contact/      # Backend logic for form submission
+│   ├── globals.css       # Core design system and CSS variables
+│   └── page.tsx          # Main entry point for the single-page layout
+├── components/           # Reusable UI React components
+│   ├── ContactForm.tsx   # Client-side form with state management
+│   ├── ContactSection.tsx# Contact UI layout wrapper
+│   ├── ShowcaseSection.tsx# Grid layout for projects & certs
+│   └── ...               # Other UI components
+├── data/                 # Centralized content management
+│   └── portfolio.ts      # Site data (Bio, links, projects, skills)
+├── lib/                  # Utility functions and configurations
+│   ├── prisma.ts         # Prisma singleton client
+│   └── validations/      # Zod validation schemas
+├── prisma/               # Database schemas and migrations
+│   └── schema.prisma     # Prisma configuration
+└── public/               # Static assets
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🚀 Getting Started
+
+### **1. Clone the repository**
+```bash
+git clone https://github.com/Atharvvvvvv/Portfolio-Website-.git
+cd portfolio
+```
+
+### **2. Install dependencies**
+```bash
+npm install
+```
+
+### **3. Set up environment variables**
+Create a `.env.local` file in the root of the `portfolio` directory:
+```env
+# Database connection string from Neon
+DATABASE_URL="postgresql://user:password@host/database?sslmode=require"
+
+# Resend Email Configuration
+RESEND_API_KEY="your_resend_api_key"
+RESEND_FROM="onboarding@resend.dev"
+RESEND_TO="your_personal_email@gmail.com"
+```
+
+### **4. Push the Database Schema**
+Sync the Prisma schema with your PostgreSQL database:
+```bash
+npx prisma db push
+```
+
+### **5. Run the development server**
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to see the live site.
+
+---
+
+## 🌍 Deployment
+
+This project is optimized for deployment on **Vercel**:
+1. Push your code to GitHub.
+2. Import the project into Vercel.
+3. Add your `DATABASE_URL` and `RESEND` variables in the Vercel Environment Variables settings.
+4. Vercel will automatically build and deploy your Next.js app!
