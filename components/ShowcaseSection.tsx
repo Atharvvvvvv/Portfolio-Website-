@@ -61,8 +61,10 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.9 }}
       transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
-      className={`about-stat-card group relative flex flex-col overflow-hidden p-0 gap-0 border border-border bg-surface transition-all duration-300 hover:border-accent/40 hover:-translate-y-1 hover:shadow-[0_8px_30px_color-mix(in_oklch,var(--accent)_15%,transparent)] ${
-        item.featured ? "md:col-span-2 lg:col-span-2" : ""
+      className={`about-stat-card group relative flex flex-col overflow-hidden p-0 gap-0 border border-border bg-surface transition-all duration-300 hover:-translate-y-1 ${
+        item.type === "project" 
+          ? "hover:border-accent/40 hover:shadow-[0_8px_30px_color-mix(in_oklch,var(--accent)_15%,transparent)]" 
+          : "hover:border-emerald-500/40 hover:shadow-[0_8px_30px_rgba(16,185,129,0.15)]"
       }`}
     >
       {/* Image Container with Zoom effect */}
@@ -78,20 +80,35 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
         <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         
         {/* Type Badge */}
-        <div className="absolute top-4 left-4 flex items-center gap-1.5 rounded-full bg-background/90 px-2.5 py-1 backdrop-blur-md border border-white/10">
+        <div className={`absolute top-4 left-4 flex items-center gap-1.5 rounded-full px-2.5 py-1 backdrop-blur-md border ${
+          item.type === "project" 
+            ? "bg-accent/10 border-accent/20 text-accent" 
+            : "bg-emerald-500/10 border-emerald-500/20 text-emerald-500"
+        }`}>
           {item.type === "project" ? (
             <Code2 size={12} className="text-accent" />
           ) : (
-            <Award size={12} className="text-accent" />
+            <Award size={12} className="text-emerald-500" />
           )}
-          <span className="text-[10px] font-medium uppercase tracking-wider text-foreground">
+          <span className="text-[10px] font-medium uppercase tracking-wider">
             {item.type}
           </span>
         </div>
       </div>
 
+      {/* Clickable overlay for the entire card */}
+      {(item.demo || item.github || item.certificate) && (
+        <a 
+          href={item.demo || item.github || item.certificate} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="absolute inset-0 z-0"
+          aria-label={`View ${item.title}`}
+        />
+      )}
+
       {/* Content */}
-      <div className="flex flex-1 flex-col p-5 sm:p-6">
+      <div className="flex flex-1 flex-col p-5 sm:p-6 pointer-events-none">
         <div className="mb-4">
           <h3 className="font-sans text-lg font-semibold leading-tight text-foreground group-hover:text-accent transition-colors">
             {item.title}
@@ -125,7 +142,7 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
         )}
 
         {/* Metadata & Actions */}
-        <div className="mt-auto flex flex-wrap items-center gap-4 pt-4 border-t border-border/50">
+        <div className="mt-auto flex flex-wrap items-center gap-4 pt-4 border-t border-border/50 relative z-10 pointer-events-auto">
           {item.date && (
             <span className="flex items-center gap-1.5 font-sans text-xs text-muted">
               <CalendarDays size={14} className="text-accent/70" />

@@ -3,7 +3,6 @@
 import { useReducedMotion, motion, type Variants } from "framer-motion";
 import {
   type LucideIcon,
-  MapPin,
   GraduationCap,
   Briefcase,
   Download,
@@ -193,7 +192,6 @@ export default function AboutSection() {
 
             {/* Meta info */}
             <motion.div variants={fadeUp} className="flex flex-col gap-3">
-              <MetaRow icon={MapPin}>{about.location}</MetaRow>
               <MetaRow icon={Briefcase}>
                 {about.currentRole} &mdash;{" "}
                 <span className="text-accent font-medium">
