@@ -1,10 +1,10 @@
-# 🚀 Atharv's Portfolio Website
+# Atharv's Portfolio Website
 
 A modern, high-performance, and fully responsive personal portfolio website built to showcase projects, skills, and certifications. This portfolio features a dynamic, full-stack contact form backed by a robust PostgreSQL database and an automated email notification system.
 
 ---
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### **Frontend**
 - **Framework**: Next.js (App Router)
@@ -24,7 +24,7 @@ A modern, high-performance, and fully responsive personal portfolio website buil
 
 ---
 
-## 🏗 Architecture & Workflows
+## Architecture & Workflows
 
 ### **1. Full-Stack Contact Form Workflow**
 
@@ -74,7 +74,7 @@ erDiagram
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 - **Blazing Fast Performance**: Statically generated pages where possible, optimizing load times.
 - **Dynamic Grid Layouts**: Projects and certifications are displayed using clean, distinct UI cards with custom hover effects (Gold for projects, Emerald for certifications).
@@ -88,7 +88,7 @@ erDiagram
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 portfolio/
@@ -113,7 +113,7 @@ portfolio/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### **1. Clone the repository**
 ```bash
@@ -153,7 +153,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the l
 
 ---
 
-## 🌍 Deployment
+## Deployment
 
 This project is optimized for deployment on **Vercel**:
 1. Push your code to GitHub.
