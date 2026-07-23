@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useReducedMotion, motion, AnimatePresence, type Variants } from "framer-motion";
 import { ExternalLink, CalendarDays, ShieldCheck, LayoutGrid, Award, Code2 } from "lucide-react";
 import { portfolio } from "@/data/portfolio";
@@ -97,15 +98,21 @@ function ShowcaseCard({ item }: { item: ShowcaseItem }) {
       </div>
 
       {/* Clickable overlay for the entire card */}
-      {(item.demo || item.github || item.certificate) && (
+      {item.type === "certificate" ? (
+        <Link 
+          href={`/certificate/${item.id}`} 
+          className="absolute inset-0 z-0"
+          aria-label={`View ${item.title}`}
+        />
+      ) : (item.demo || item.github) ? (
         <a 
-          href={item.demo || item.github || item.certificate} 
+          href={item.demo || item.github} 
           target="_blank" 
           rel="noopener noreferrer"
           className="absolute inset-0 z-0"
           aria-label={`View ${item.title}`}
         />
-      )}
+      ) : null}
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-5 sm:p-6 pointer-events-none">

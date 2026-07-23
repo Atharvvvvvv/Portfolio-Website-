@@ -4,6 +4,17 @@ A modern, high-performance, and fully responsive personal portfolio website buil
 
 ---
 
+## Recent Updates (Checkpoint)
+
+- **Dynamic Certificate Pages**: Built a dedicated Next.js dynamic route (`/certificate/[id]`) featuring a premium, glassmorphism-inspired layout to view high-resolution certificates.
+- **Certificate Data Hooks & PDF Extraction**: Integrated new certificates (InAmigos Web Dev Internship, 45 Days of Code, Intro to Deep Learning, NLP). Extracted thumbnail images from PDFs using PyMuPDF and configured the "Verify Authenticity" buttons to link directly to the source PDFs.
+- **UI & UX Refinements**: 
+  - Updated the InAmigos Foundation Website project card to use an actual screenshot instead of a placeholder.
+  - Improved the "Download Resume" behavior to open the PDF inline in a new tab rather than forcing an immediate download.
+- **Maintenance**: Resolved strict TypeScript typings for Zod validation errors and configured VS Code to support new Tailwind CSS v4 `@theme` directives without throwing warnings.
+
+---
+
 ## Tech Stack
 
 ### **Frontend**

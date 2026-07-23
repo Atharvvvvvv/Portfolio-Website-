@@ -286,9 +286,10 @@ export default function AboutSection() {
             <motion.div variants={fadeUp}>
               <a
                 href={portfolio.resumeUrl}
-                download
+                target="_blank"
+                rel="noopener noreferrer"
                 className="hero-btn-ghost group inline-flex"
-                aria-label="Download resume PDF"
+                aria-label="Open resume PDF in new tab"
               >
                 <Download size={15} aria-hidden="true" />
                 {about.resumeButtonText}
